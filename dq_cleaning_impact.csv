@@ -1,0 +1,8 @@
+table_name,raw_rows,rows_removed,golden_rows,note
+borrowers,30600,19585,11015,"Deduped to 1 row per borrower_id (latest updated_at). 8,518 of 11,015 borrower_ids (77%) had internally conflicting name/phone/email/city across raw rows -- flagged, not resolved."
+agents,30000,29000,1000,"Collapsed 30,000 scrambled rows to 1,000 agent_id via attribute mode. Team/vendor per agent are low-confidence reconstructions."
+calls,91350,1350,90000,"Dropped 1,350 duplicate call_id rows (1,271 exact dupes + 79 conflicting copies resolved by rule)."
+whatsapp_events,60600,600,60000,Dropped 600 exact duplicate whatsapp_event_id rows.
+payments,25500,500,25000,Dropped 500 duplicate payment_id rows. Removed Rs 2.59 Cr (1.93%) of double-counted SUCCESS amount. payment_reference NOT used as dedup key (legitimately reused across distinct payments).
+call_dispositions,35000,0,35000,"No row-level dedup. Canonicalized PROMISE_TO_PAY -> PTP (same event, two labels, ~50/50 split every month)."
+account_status_history,60000,0,60000,"No row-level dedup. 85.7% of accounts disagree between accounts.status and latest history status -- flagged, both kept."
